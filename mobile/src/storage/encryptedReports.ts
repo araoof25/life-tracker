@@ -6,7 +6,7 @@ import { openReportStore } from "./reportStore.ts";
 const keyName = "life-tracker.report-database-key.v1";
 const keyOptions = { keychainAccessible: SecureStore.WHEN_UNLOCKED_THIS_DEVICE_ONLY };
 
-async function openEncryptedReports() {
+async function openEncryptedReports(): Promise<Awaited<ReturnType<typeof openReportStore>>> {
   const database = await openDatabaseAsync("life-tracker-reports.db", { useNewConnection: true });
   try {
     const cipher = await database.getFirstAsync<{ cipher_version: string }>("PRAGMA cipher_version");
